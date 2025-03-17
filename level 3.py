@@ -23,3 +23,5 @@ for _ in range(6):
     User.get().sell_by_index(0)
 
 print(User.get())
+
+

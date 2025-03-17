@@ -1,4 +1,4 @@
-from .cat import Cat
+from game.cat import Cat
 
 
 class ErrorCatNotFound(Exception):
@@ -32,16 +32,18 @@ class Offer:
         return self._price_sell
 
     def buy(self) -> None:
-        from .user import User
+        from game.user import User
 
+        print(f'Покупаем {self._cat} за {self._price_sell}')
         User.get().money -= self._price_sell
         User.get().cats.append(self._cat.clone())
 
     def sell(self) -> None:
-        from .user import User
+        from game.user import User
 
         if self._cat not in User.get().cats:
             raise ErrorCatNotFound(f'{self._cat} not found!')
+        print(f'Продаём {self._cat} за {self._price_sell}')
         User.get().cats.remove(self._cat)
         User.get().money += self._price_buy
 

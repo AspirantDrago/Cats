@@ -1,9 +1,9 @@
 from typing import Optional, override
 
-from ._utils import SeasonMixin
-from .cat import Cat
-from .home import Home
-from .magazine import Magazine
+from game._utils import SeasonMixin
+from game.cat import Cat
+from game.home import Home
+from game.magazine import Magazine
 
 
 class ErrorNoMoney(Exception):

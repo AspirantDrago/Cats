@@ -1,7 +1,7 @@
 from typing import override
 
-from ._utils import SeasonMixin
-from .room import Room
+from game._utils import SeasonMixin
+from game.room import Room
 
 
 class Home(SeasonMixin):
@@ -9,7 +9,7 @@ class Home(SeasonMixin):
     PRICE = 3
 
     def __init__(self, count_rooms=2):
-        from .user import User
+        from game.user import User
 
         Home._count += 1
         self._number = Home._count

@@ -1,6 +1,7 @@
+import doctest
 from enum import Enum
 
-from ._utils import SeasonMixin
+from game._utils import SeasonMixin
 
 
 class Gender(Enum):
@@ -85,6 +86,27 @@ class Cat(SeasonMixin):
         self._hungry = True
 
     def __mul__(self, other: 'Cat') -> list['Cat']:
+        """
+        Метод "умножения" двух котов.
+        Отвечает за скрещивание двух котов и генерацию потомства.
+        Если животные одного пола, то выбрасывается исключение ErrorOneGenderChpock
+
+        :param other: Вторая кошка, скрещиваемая с текущей
+        :return: Список котят
+        :raise ErrorOneGenderChpock:
+
+        >>> cat1 = Cat(Gender.MALE, Color.LIGHT)
+        >>> cat2 = Cat(Gender.FEMALE, Color.DARK)
+        >>> cat1 * cat2
+        [Cat MALE LIGHT 0, Cat MALE LIGHT 0, Cat FEMALE LIGHT 0, Cat MALE DARK 0, Cat MALE DARK 0, Cat FEMALE DARK 0]
+
+        >>> cat3 = Cat(Gender.MALE, Color.LIGHT)
+        >>> cat1 * cat3
+        Traceback (most recent call last):
+            ...
+        cat.ErrorOneGenderChpock: один пол: MALE и MALE
+
+        """
         if self.gender == other.gender:
             raise ErrorOneGenderChpock(f"один пол: {self.gender} и {other.gender}")
         return [
@@ -112,8 +134,28 @@ class Cat(SeasonMixin):
         return c
 
     def feed(self) -> None:
+        """
+
+        >>> cat = Cat(Gender.FEMALE, Color.LIGHT)
+        >>> cat.new_season()
+        >>> cat.hungry
+        True
+        >>> cat.feed()
+        Traceback (most recent call last):
+            ...
+        game.user.ErrorNoMoney
+        >>> from game.user import User
+        >>> User.get().money += 1
+        >>> cat.feed()
+        >>> cat.hungry
+        False
+        """
         if self._hungry:
-            from .user import User
+            from game.user import User
 
             self._hungry = False
             User.get().money -= 1
+
+
+if __name__ == '__main__':
+    doctest.testmod()
