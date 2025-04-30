@@ -1,4 +1,4 @@
-from typing_extensions import override
+from typing import override
 
 from ._utils import SeasonMixin
 from .cat import Cat
